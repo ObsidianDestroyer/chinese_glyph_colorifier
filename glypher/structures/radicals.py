@@ -1,7 +1,6 @@
 import unicodedata
 
-from typing import Dict, Final, List
-
+from typing import Final, List
 
 from glypher.helpers.typing import Bool, String, Bytes
 from glypher.helpers.exceptions import CharacterError, WrongCharacterUnicodeBlock
@@ -10,7 +9,7 @@ from glypher.utils.encoder import encode
 
 class RadicalBase(object):
     """A base class for inheritance."""
-    color: String
+    color: String = 'grey'
     category: Final[String] = 'Lo'
     name: String
 
@@ -40,9 +39,9 @@ class RadicalBase(object):
 
 
 class Human(RadicalBase):
-    """Human radical exposed as "亻, 人" """
+    """Human radical exposed as "亻, a" """
     name = 'human'
-    color = 'yellow'
+    color = 'blue'
 
     block_start = 'U4EBA'
     block_end = 'U513E'
