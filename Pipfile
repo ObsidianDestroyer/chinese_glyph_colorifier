@@ -9,6 +9,7 @@ pytest = "==6.2.2"
 fastapi = "*"
 uvicorn = "*"
 python-multipart = "*"
+pydantic = "*"
 
 [dev-packages]
 bpython = "*"
