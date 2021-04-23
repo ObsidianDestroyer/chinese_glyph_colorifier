@@ -39,7 +39,6 @@ export default {
         sendText: async function(textarea) {
             if (textarea.target != null) {
                 var text = textarea.target.value
-
                 var form = new FormData();
                 form.set('text', String(text));
 
@@ -47,6 +46,7 @@ export default {
                 .then(response => {
                     var validatedText = [];
                     for (let data of response) {
+                        console.log(data.color)
                         validatedText.push(data)
                     }
                     this.appliedText = validatedText;

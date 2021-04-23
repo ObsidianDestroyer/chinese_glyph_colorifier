@@ -8,7 +8,7 @@ class CharacterError(Exception):
         self,
         char: String,
         message: String = (
-            'You have passed invalid character "{char}", '
+            r'You have passed invalid character "{char!r}", '
             'which not in CJK table!'
         ),
     ) -> None:
@@ -25,7 +25,7 @@ class WrongCharacterUnicodeBlock(Exception):
         self,
         code: String,
         message: String = (
-            'You have passed invalid Unicode block code "{code}", '
+            r'You have passed invalid Unicode block code "{code!r}", '
             'which not in CJK range!'
         ),
     ) -> None:
