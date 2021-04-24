@@ -12,4 +12,6 @@ RUN apt-get update && \
 
 COPY . /usr/src/app
 
-CMD ["uvicorn", "main:make_application", "--factory"]
+EXPOSE 2731
+
+CMD ["uvicorn", "main:make_application", "--host", "glypher", "--factory", "--port", "2731", "--forwarded-allow-ips='*'"]

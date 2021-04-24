@@ -1,0 +1,36 @@
+version: "3.7"
+
+services:
+  frontend:
+    container_name: glypher-frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    volumes:
+      - ./frontend/nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
+      - ./frontend/dist:/usr/share/nginx/html
+    links:
+      - "backend:frontend"
+    ports:
+      - "80:80"
+      - "443:443"
+    networks:
+        - glypher
+
+
+  backend:
+    hostname: glypher
+    container_name: glypher
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    expose:
+      - 2731
+    ports:
+      - "2731:2731"
+    networks:
+        - glypher
+
+networks:
+  glypher:
+    driver: bridge
