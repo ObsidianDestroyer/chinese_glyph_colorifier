@@ -8,7 +8,6 @@ services:
       dockerfile: Dockerfile
     volumes:
       - ./frontend/nginx/nginx.conf:/etc/nginx/conf.d/nginx.conf
-      - ./frontend/dist:/usr/share/nginx/html
     links:
       - "backend:frontend"
     ports:
