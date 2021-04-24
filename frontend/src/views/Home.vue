@@ -1,5 +1,4 @@
 <template>
-    <Header/>
     <h1>Chinese character coloring app</h1>
     <div class="text-area-wrapper">
         <MDBTextarea
@@ -26,16 +25,14 @@
 <script>
 import { MDBTextarea } from 'mdb-vue-ui-kit';
 
-import Header from '@/components/Header.vue';
 import StyledText from '@/components/StyledText.vue';
 import Counter from '@/components/Counter.vue';
 
 import { $api } from '@/api/mainApi.js';
 
-
+Math.round()
 export default {
     components:  {
-        Header,
         MDBTextarea,
         StyledText,
         Counter,
