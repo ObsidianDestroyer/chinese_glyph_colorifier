@@ -25,9 +25,6 @@ class PostCharacterToColorization extends APIBase {
         const response = await axios.post(
             this.getUrl(),
             characters,
-            // {headers: {
-            //     'Content-type': 'multipart/form-data'
-            // }},
         );
         return response.data;
     }

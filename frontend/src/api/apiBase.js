@@ -1,7 +1,7 @@
 
 
 class APIBase {
-    baseUrl = 'http://127.0.0.1:8080';
+    baseUrl = 'http://127.0.0.1:2731';
     resource;
 
     constructor(resource) {
