@@ -1,5 +1,5 @@
 <template>
-    <p v-if="textData">
+    <p v-if="textData" class="styled-text-border">
         <span
             v-for="glyph in textData"
             :key="glyph"
@@ -38,5 +38,9 @@ export default defineComponent({
 <style>
 .styled-text {
     white-space: pre;
+}
+.styled-text-border {
+    padding-left: 20px;
+    border-left: 2px rgba(0,0,0,.7) solid;
 }
 </style>

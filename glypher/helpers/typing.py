@@ -1,6 +1,6 @@
 from typing import TypeVar
 
-
-Bytes = TypeVar('Bytes', bound=bytes)
+Integer = TypeVar('Integer', bound=int)
 String = TypeVar('String', bound=str)
+Bytes = TypeVar('Bytes', bound=bytes)
 Bool = TypeVar('Bool', bound=bool)

@@ -1,9 +1,8 @@
 import unicodedata
 
-from typing import Final, List, TypeVar
+from typing import Final, List
 
 from glypher.helpers.typing import Bool, String, Bytes
-from glypher.helpers.exceptions import CharacterError, WrongCharacterUnicodeBlock
 from glypher.utils.encoder import encode
 
 
@@ -20,33 +19,6 @@ class RadicalBase(object):
     alt_radical: String = None
     signature: Bytes
     alt_signature: Bytes
-
-    def decode(self, character: String) -> String:
-        character_code: String = encode_to_str(character)
-        conditions: List[Bool] = [
-            self.block_start <= character_code,
-            self.block_end >= character_code,
-        ]
-        if all(conditions):
-            return self.radical
-
-    def _decode_unicode_end_block_literal(self) -> (String,):
-        start_character: String = chr(int(self.block_end.strip('U').zfill(8), 16))
-        end_character: String = chr(int(self.block_end.strip('U').zfill(8), 16))
-        return start_character, end_character
-
-    def inspect_radical(self, character: String) -> Bool:
-        start_block_character, end_block_character = self._decode_unicode_end_block_literal()
-        conditions: List[Bool] = [
-            self.radical <= character,
-            character <= end_block_character,
-        ]
-
-        if unicodedata.category(character) == self.category:
-            print(all(conditions))
-            return all(conditions)
-        else:
-            return all(conditions)
 
 
 class Human(RadicalBase):
@@ -231,13 +203,7 @@ class Food(RadicalBase):
     signature = encode(radical)
 
 
-__all__ = [
-    'Tree', 'Food', 'Human',
-    'Earth', 'Metal', 'Water',
-    'Grass', 'Woman', 'Mouth',
-    'Jasper', 'FastWalk', 'Fire',
-    'Heart', 'Sun',
-]
+__all__ = ['glyphs', 'RadicalBase']
 
 glyphs: List[RadicalBase] = [
     Tree(), Food(), Human(),

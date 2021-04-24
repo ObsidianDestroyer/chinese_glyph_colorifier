@@ -9,9 +9,16 @@
             :value="appliedText"
             @input="sendText"
         />
+    </div>
+    <div class="styled-text-cointaner">
         <StyledText
-            id="styled"
+        style="styled-text-border"
             :textData="appliedText"
+        />
+        <Counter
+        id="counter"
+        :glyphStats="counter"
+        :totalGlyphs="totalGlyphs"
         />
     </div>
 </template>
@@ -21,6 +28,8 @@ import { MDBTextarea } from 'mdb-vue-ui-kit';
 
 import Header from '@/components/Header.vue';
 import StyledText from '@/components/StyledText.vue';
+import Counter from '@/components/Counter.vue';
+
 import { $api } from '@/api/mainApi.js';
 
 
@@ -29,10 +38,13 @@ export default {
         Header,
         MDBTextarea,
         StyledText,
+        Counter,
     },
     data() {
         return {
             appliedText: '',
+            counter: '',
+            totalGlyphs: 0,
         }
     },
     methods: {
@@ -45,11 +57,17 @@ export default {
                 await $api.postAPI.postCharacters(form)
                 .then(response => {
                     var validatedText = [];
-                    for (let data of response) {
-                        console.log(data.color)
+                    var counter = [];
+                    for (let data of response.body) {
                         validatedText.push(data)
                     }
+                    for (let [radical, count] of Object.entries(response.stats)) {
+                        counter.push({radical: radical, count: count})
+                    }
                     this.appliedText = validatedText;
+                    this.counter = counter;
+                    this.totalGlyphs = Object.keys(response.body).length;
+                    console.log(this.totalGlyphs)
                 })
                 .catch(error => {
                     console.log(error)
@@ -63,10 +81,20 @@ export default {
 
 <style>
 .text-area-wrapper {
+    display: inline;
     width: 40vw;
     height: 10vh;
     margin-left: auto;
     margin-right: auto;
+}
+.styled-text-cointaner {
+    display: flex;
+    justify-content: center;
+    margin-top: 2em;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: left;
+    width: 100em;
 }
 
 </style>

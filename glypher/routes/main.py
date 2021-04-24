@@ -5,16 +5,13 @@ from fastapi.requests import Request
 from fastapi.responses import JSONResponse
 
 from glypher.structures.radicals import glyphs, RadicalBase
-
-from glypher.helpers.typing import String, Bool
+from glypher.data.models.api_models import GlyphResponse
+from glypher.helpers.typing import String, Bool, Integer
 from glypher.structures.glyphs import Glyph
 from glypher.utils.encoder import encode_to_str
 
 
 router = APIRouter(prefix='/api')
-
-LAST_COLORIZATION: List[Dict] = []
-
 mapped = {
     glyph.radical: glyph for glyph in glyphs
 }
@@ -31,21 +28,15 @@ def decode(character: String) -> Union[RadicalBase, Bool]:
             return mapped.get(glyph.radical)
 
 
-@router.get('/colorify')
-async def get_last_colorization(request: Request) -> JSONResponse:
-    return JSONResponse(LAST_COLORIZATION)
-
-
 @router.post('/colorify')
 async def colorize_characters(request: Request) -> JSONResponse:
-    global LAST_COLORIZATION
     form = await request.form()
     text = form.get('text')
+    glyphs_list: List[Glyph] = []
 
-    response: List[Dict] = []
     for char in text:
         if radical := decode(char):
-            response.append(
+            glyphs_list.append(
                 Glyph(
                     character=char,
                     radical=[
@@ -54,16 +45,28 @@ async def colorize_characters(request: Request) -> JSONResponse:
                     ],
                     color=radical.color,
                     radical_name=radical.name,
-                ).dict(),
+                ),
             )
         else:
-            response.append(
+            glyphs_list.append(
                 Glyph(
                     character=char,
                     radical=[],
-                ).dict(),
+                ),
             )
-    LAST_COLORIZATION = response
-    from pprint import pprint
-    # pprint(response)
-    return JSONResponse(response)
+    radicals_stat: Dict[String, Integer] = {}
+    for glyph in glyphs_list:
+        if glyph.radical:
+            if glyph.radical[0] not in radicals_stat.keys():
+                radicals_stat.update({
+                    glyph.radical[0]: 1
+                })
+            else:
+                radicals_stat.update({
+                    glyph.radical[0]: radicals_stat[glyph.radical[0]] + 1
+                })
+    response = GlyphResponse(
+        stats=radicals_stat,
+        body=[glyph.dict() for glyph in glyphs_list],
+    )
+    return JSONResponse(response.dict())
