@@ -11,12 +11,17 @@
         <strong>{{ author.name }}</strong>
         </h4>
         <p class="subtitle">{{ author.jobType }}</p>
+        <p v-if="author.sourceCode">
+            <span>
+                Исходный код <a href="{{ author.sourceCode }}">GitHub</a>
+            </span>
+        </p>
     </div>
     <footer class="card-footer">
         <p class="card-footer-item">
-        <span>
-            Посмотреть в <a href="{{ author.link }}">Вконтакте</a>
-        </span>
+            <span>
+                Посмотреть в <a href="{{ author.link }}">Вконтакте</a>
+            </span>
         </p>
     </footer>
     </div>
@@ -39,7 +44,8 @@ export default defineComponent({
                 {
                     name: 'Александр Васильев',
                     jobType: 'Разработчик',
-                    link: 'https://vk.com/walther_syndicates'
+                    link: 'https://vk.com/walther_syndicates',
+                    sourceCode: 'https://github.com/ObsidianDestroyer/chinese_glyph_colorifier',
                 },
                 {
                     name: 'Кристина Железняк',
