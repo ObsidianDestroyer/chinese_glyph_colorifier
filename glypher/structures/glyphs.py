@@ -7,7 +7,7 @@ from glypher.helpers.typing import String
 
 
 class Glyph(BaseModel):
-    color: Optional[String] = Field('grey')
+    color: Optional[String] = Field('#ebebeb')
     character: Optional[String]
     radical: List[Optional[String]]
     radical_name: Optional[String]

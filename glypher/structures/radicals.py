@@ -1,14 +1,12 @@
-import unicodedata
-
 from typing import Final, List
 
-from glypher.helpers.typing import Bool, String, Bytes
+from glypher.helpers.typing import String, Bytes
 from glypher.utils.encoder import encode
 
 
 class RadicalBase(object):
     """A base class for inheritance."""
-    color: String = 'grey'
+    color: String = '#dbdbdb'
     category: Final[String] = 'Lo'
     name: String
 
@@ -188,7 +186,6 @@ class FastWalk(RadicalBase):
     block_end = 'U9090'
 
     signature = encode(radical)
-    # alt_signature = encode(alt_radical)
 
 
 class Food(RadicalBase):
@@ -203,13 +200,83 @@ class Food(RadicalBase):
     signature = encode(radical)
 
 
+class BlueGreen(RadicalBase):
+    name = 'blu-green'
+    color = '#009376'
+
+    radical = '青'
+
+    block_start = 'U9751'
+    block_end = 'U975D'
+
+    signature = encode(radical)
+
+
+class Magenta(RadicalBase):
+    name = 'magenta'
+    color = '#ff00ff'
+
+    radical = '赤'
+
+    block_start = 'U8D64'
+    block_end = 'U8D6F'
+
+    signature = encode(radical)
+
+
+class Yellow(RadicalBase):
+    name = 'yellow'
+    color = '#ffff00'
+
+    radical = '黄'
+
+    block_start = 'U9EC3'
+    block_end = 'U9ECC'
+
+    signature = encode(radical)
+
+
+class White(RadicalBase):
+    name = 'white'
+    color = '#cfcfcf'
+
+    radical = '白'
+
+    block_start = 'U767D'
+    block_end = 'U76AD'
+
+    signature = encode(radical)
+
+
+class Black(RadicalBase):
+    name = 'black'
+    color = '#000000'
+
+    radical = '黑'
+
+    block_start = 'U9ED1'
+    block_end = 'U9EF8'
+
+    signature = encode(radical)
+
+
+class Dot(RadicalBase):
+    name = 'dot'
+    color = 'grey'
+
+    block_start = 'U3002'
+    block_end = 'U3002'
+
+
 __all__ = ['glyphs', 'RadicalBase']
+
 
 glyphs: List[RadicalBase] = [
     Tree(), Food(), Human(),
     Earth(), Metal(), Water(),
     Grass(), Woman(), Mouth(),
     Jasper(), FastWalk(), Fire(),
-    Heart(), Sun(),
-
+    Heart(), Sun(), BlueGreen(),
+    Magenta(), Yellow(), White(),
+    Black(),
 ]

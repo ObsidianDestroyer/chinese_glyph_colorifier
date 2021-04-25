@@ -1,3 +1,4 @@
+import unicodedata
 from typing import Dict, List, Union
 
 from fastapi.routing import APIRouter
@@ -18,8 +19,8 @@ mapped = {
 
 
 def decode(character: String) -> Union[RadicalBase, Bool]:
+    character_code: String = encode_to_str(character)
     for glyph in glyphs:
-        character_code: String = encode_to_str(character)
         conditions: List[Bool] = [
             glyph.block_start <= character_code,
             glyph.block_end >= character_code,
@@ -36,6 +37,7 @@ async def colorize_characters(request: Request) -> JSONResponse:
 
     for char in text:
         if radical := decode(char):
+            print(char, radical)
             glyphs_list.append(
                 Glyph(
                     character=char,
@@ -48,10 +50,18 @@ async def colorize_characters(request: Request) -> JSONResponse:
                 ),
             )
         else:
+            color = '#e6e6e6'
+            if (
+                unicodedata.category(char) == 'Lo'
+                or
+                unicodedata.category(char) == 'Po'
+            ):
+                color = 'grey'
             glyphs_list.append(
                 Glyph(
                     character=char,
                     radical=[],
+                    color=color,
                 ),
             )
     radicals_stat: Dict[String, Integer] = {}
